@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { handleFieldChange } from "@intechprev/react-lib";
 
 var InputMask = require('react-input-mask');
 
@@ -12,15 +11,25 @@ export default class CampoTexto extends Component {
 		this.possuiErros = false;
 	}
 
+	handleFieldChange (context, event) {
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+	
+		context.setState({
+		  [name]: value
+		});
+	  }
+
     onChange = async (e) => {
-		await handleFieldChange(this.props.contexto, e, this.props.parent);
+		await this.handleFieldChange(this.props.contexto, e);
 		
         if(this.props.onChange)
             this.props.onChange();
     }
 
 	onBlur = async (e) => {
-		await handleFieldChange(this.props.contexto, e, this.props.parent);
+		await this.handleFieldChange(this.props.contexto, e);
 
 		if(this.props.onBlur)
 			this.props.onBlur(e);

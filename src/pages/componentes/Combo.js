@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import { handleFieldChange } from "@intechprev/react-lib";
-
 export default class Combo extends Component {
 	constructor(props) {
 		super(props);
@@ -23,12 +21,20 @@ export default class Combo extends Component {
 			[nome]: this.props.padrao
 		});
 	}
+	
+	handleFieldChange (context, event) {
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+	
+		context.setState({ [name]: value });
+	}
 
 	onChange = async (e) => {
-        await handleFieldChange(this.props.contexto, e);
+        await this.handleFieldChange(this.props.contexto, e);
 		
 		if(this.props.onChange) {
-			await this.props.onChange(e);
+			await this.props.onChange(this.props.contexto, e);
 		}
 	}
 
